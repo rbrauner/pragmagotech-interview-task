@@ -10,6 +10,7 @@ use PragmaGoTech\Interview\Exception\AmountGreaterThanMaximumException;
 use PragmaGoTech\Interview\Exception\AmountLessThanMinimumException;
 use PragmaGoTech\Interview\Factory\FeeEdgesFactory;
 use PragmaGoTech\Interview\Factory\FeeStructureFactory;
+use PragmaGoTech\Interview\Utils\Math;
 
 /**
  * Fee calculator. Calculates the total fee for a loan proposal.
@@ -35,6 +36,12 @@ final readonly class FeeCalculator implements FeeCalculatorInterface
         }
 
         // $feeEdges = FeeEdgesFactory::create($feeStructure, $amount);
+
+        // $percentage = Math::calculatePercentageBetween(
+        //     $amount,
+        //     $feeEdges->getPrevAmount(),
+        //     $feeEdges->getNextAmount()
+        // );
 
         return 0.0;
     }
