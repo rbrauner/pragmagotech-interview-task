@@ -4,27 +4,26 @@ declare(strict_types=1);
 
 namespace PragmaGoTech\Interview\Model;
 
+use PragmaGoTech\Interview\Contract\LoanProposalInterface;
+
 /**
  * A cut down version of a loan application containing
  * only the required properties for this test.
  */
-class LoanProposal
+final readonly class LoanProposal implements LoanProposalInterface
 {
-    private int $term;
-
-    private float $amount;
-
-    public function __construct(int $term, float $amount)
-    {
-        $this->term = $term;
-        $this->amount = $amount;
+    public function __construct(
+        private int $term,
+        private float $amount
+    ) {
     }
 
     /**
      * Term (loan duration) for this loan application
      * in number of months.
      */
-    public function term(): int
+    #[\Override]
+    public function getTerm(): int
     {
         return $this->term;
     }
@@ -32,7 +31,8 @@ class LoanProposal
     /**
      * Amount requested for this loan application.
      */
-    public function amount(): float
+    #[\Override]
+    public function getAmount(): float
     {
         return $this->amount;
     }
