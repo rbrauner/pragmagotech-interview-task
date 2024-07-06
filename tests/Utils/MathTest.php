@@ -185,4 +185,69 @@ final class MathTest extends TestCase
         // Act
         Math::calculateValueBetweenWithPercentage(10, 100, 100);
     }
+
+    // roundUpToAny
+
+    public function testRoundUpToAnyFor0(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(0);
+
+        // Assert
+        $this->assertEquals(0, $value);
+    }
+
+    public function testRoundUpToAnyFor1(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(1);
+
+        // Assert
+        $this->assertEquals(5, $value);
+    }
+
+    public function testRoundUpToAnyFor5(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(5);
+
+        // Assert
+        $this->assertEquals(5, $value);
+    }
+
+    public function testRoundUpToAnyForNegative5(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(-5);
+
+        // Assert
+        $this->assertEquals(-5, $value);
+    }
+
+    public function testRoundUpToAnyForNegative4(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(-4);
+
+        // Assert
+        $this->assertEquals(0, $value);
+    }
+
+    public function testRoundUpToAnyFor1WithX2(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(1, 2);
+
+        // Assert
+        $this->assertEquals(2, $value);
+    }
+
+    public function testRoundUpToAnyFor2WithX2(): void
+    {
+        // Act
+        $value = Math::roundUpToAny(2, 2);
+
+        // Assert
+        $this->assertEquals(2, $value);
+    }
 }

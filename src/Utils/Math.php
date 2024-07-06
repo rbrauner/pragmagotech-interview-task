@@ -67,4 +67,13 @@ final class Math
 
         return $value + ($percentage / 100) * ($high - $low);
     }
+
+    /**
+     * Round up a number to the nearest multiple of another number.
+     * E.g. for number 13 and multiple 5, the result is 15.
+     */
+    public static function roundUpToAny(float $n, int $x = 5): float
+    {
+        return (ceil($n) % $x === 0) ? ceil($n) : round(($n + $x / 2) / $x) * $x;
+    }
 }

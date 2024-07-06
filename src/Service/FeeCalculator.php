@@ -35,16 +35,16 @@ final readonly class FeeCalculator implements FeeCalculatorInterface
             throw new AmountGreaterThanMaximumException();
         }
 
-        // $feeEdges = FeeEdgesFactory::create($feeStructure, $amount);
+        $feeEdges = FeeEdgesFactory::create($feeStructure, $amount);
 
-        // $percentage = Math::calculatePercentageBetween(
-        //     $amount,
-        //     $feeEdges->getPrevAmount(),
-        //     $feeEdges->getNextAmount()
-        // );
+        $percentage = Math::calculatePercentageBetween(
+            $amount,
+            $feeEdges->getPrevAmount(),
+            $feeEdges->getNextAmount()
+        );
 
-        // $fee = Math::calculateValueBetweenWithPercentage($percentage, $feeEdges->getPrevFee(), $feeEdges->getNextFee());
+        $fee = Math::calculateValueBetweenWithPercentage($percentage, $feeEdges->getPrevFee(), $feeEdges->getNextFee());
 
-        return 0.0;
+        return Math::roundUpToAny($fee, 5);
     }
 }
