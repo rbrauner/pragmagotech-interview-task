@@ -8,6 +8,7 @@ use PragmaGoTech\Interview\Contract\FeeCalculatorInterface;
 use PragmaGoTech\Interview\Contract\LoanProposalInterface;
 use PragmaGoTech\Interview\Exception\AmountGreaterThanMaximumException;
 use PragmaGoTech\Interview\Exception\AmountLessThanMinimumException;
+use PragmaGoTech\Interview\Factory\FeeEdgesFactory;
 use PragmaGoTech\Interview\Factory\FeeStructureFactory;
 
 /**
@@ -32,6 +33,8 @@ final readonly class FeeCalculator implements FeeCalculatorInterface
         if ($feeStructure->getMaxAmount() < $amount) {
             throw new AmountGreaterThanMaximumException();
         }
+
+        // $feeEdges = FeeEdgesFactory::create($feeStructure, $amount);
 
         return 0.0;
     }
