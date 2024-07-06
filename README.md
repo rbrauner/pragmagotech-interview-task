@@ -1,5 +1,4 @@
-PragmaGO.TECH Interview Test - Fee Calculation
-=====
+# PragmaGO.TECH Interview Test - Fee Calculation
 
 ## Background
 
@@ -13,21 +12,22 @@ The requirement is to build a fee calculator that - given a monetary **amount** 
 
 Implement your solution such that it fulfils the requirements.
 
-- The fee structure does not follow a formula.
-- Values in between the breakpoints should be interpolated linearly between the lower bound and upper bound that they fall between.
-- The number of breakpoints, their values, or storage might change.
-- The term can be either 12 or 24 (number of months), you can also assume values will always be within this set.
-- The fee should be rounded up such that fee + loan amount is an exact multiple of 5.
-- The minimum amount for a loan is 1,000 PLN, and the maximum is 20,000 PLN.
-- You can assume values will always be within this range but they may be any value up to 2 decimal places.
+-   The fee structure does not follow a formula.
+-   Values in between the breakpoints should be interpolated linearly between the lower bound and upper bound that they fall between.
+-   The number of breakpoints, their values, or storage might change.
+-   The term can be either 12 or 24 (number of months), you can also assume values will always be within this set.
+-   The fee should be rounded up such that fee + loan amount is an exact multiple of 5.
+-   The minimum amount for a loan is 1,000 PLN, and the maximum is 20,000 PLN.
+-   You can assume values will always be within this range but they may be any value up to 2 decimal places.
 
 Example inputs/outputs:
-|Loan amount  |Term       |Fee     |
+|Loan amount |Term |Fee |
 |-------------|-----------|--------|
-|11,500 PLN   |24 months  |460 PLN |
-|19,250 PLN   |12 months  |385 PLN |
+|11,500 PLN |24 months |460 PLN |
+|19,250 PLN |12 months |385 PLN |
 
 # Installation
+
 A database or any other external dependency is not required for this test.
 
 ```bash
@@ -49,9 +49,11 @@ $fee = $calculator->calculate($application);
 ```
 
 # Fee Structure
+
 The fee structure doesn't follow particular algorithm and it is possible that same fee will be applicable for different amounts.
 
 ### Term 12
+
 ```
 1000 PLN: 50 PLN
 2000 PLN: 90 PLN
@@ -98,4 +100,42 @@ The fee structure doesn't follow particular algorithm and it is possible that sa
 18000 PLN: 720 PLN
 19000 PLN: 760 PLN
 20000 PLN: 800 PLN
+```
+
+# Docs
+
+## Overview
+
+Firstly calculator is determining the term structure (for now 12 and 24 months) and then (after checking if the amount is within the range) it checks range which amount falls into. Then it calculates percentage of this range. With this info it can calculate fee and round it up to the nearest multiple of 5.
+
+## Technologies
+
+-   PHP 8.3.8
+-   Composer 2.7.7
+-   PHPUnit
+-   PHPStan
+-   PHP-CS-Fixer
+-   PHP CodeSniffer
+-   Rector
+-   GrumPHP
+
+## Folder structure
+
+-   src/Contracts - contains interfaces
+-   src/Exception - contains custom exceptions
+-   src/Factory - contains factory classes
+-   src/Model - contains model classes
+-   src/Service - contains service classes (e.g. FeeCalculator)
+-   src/Util - contains utility classes
+
+## Prepare environment
+
+```shell
+composer install
+```
+
+## Run tests
+
+```shell
+php vendor/bin/phpunit
 ```
