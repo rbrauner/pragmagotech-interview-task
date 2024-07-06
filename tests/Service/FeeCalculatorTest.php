@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use PragmaGoTech\Interview\Contract\FeeCalculatorInterface;
 use PragmaGoTech\Interview\Exception\AmountGreaterThanMaximumException;
 use PragmaGoTech\Interview\Exception\AmountLessThanMinimumException;
+use PragmaGoTech\Interview\Exception\FeeStructureNotFoundException;
 use PragmaGoTech\Interview\Model\LoanProposal;
 use PragmaGoTech\Interview\Service\FeeCalculator;
 
@@ -249,6 +250,18 @@ final class FeeCalculatorTest extends TestCase
 
         // Arrange
         $application = new LoanProposal(24, -1);
+
+        // Act
+        $this->calculator->calculate($application);
+    }
+
+    public function testNotExistingTerm(): void
+    {
+        // Assert
+        $this->expectException(FeeStructureNotFoundException::class);
+
+        // Arrange
+        $application = new LoanProposal(1, 5555);
 
         // Act
         $this->calculator->calculate($application);
