@@ -43,6 +43,8 @@ final readonly class FeeCalculator implements FeeCalculatorInterface
         //     $feeEdges->getNextAmount()
         // );
 
+        // $fee = Math::calculateValueBetweenWithPercentage($percentage, $feeEdges->getPrevFee(), $feeEdges->getNextFee());
+
         return 0.0;
     }
 }

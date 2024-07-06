@@ -40,4 +40,31 @@ final class Math
 
         return (($value - $low) / ($high - $low)) * 100;
     }
+
+    /**
+     * Calculate the value between two numbers with a given percentage.
+     * E.g. for percentage 50 between 0 and 10, the result is 5.
+     */
+    public static function calculateValueBetweenWithPercentage(float $percentage, float $low, float $high): float
+    {
+        if ($low > $high) {
+            throw new LowGreaterThanHighException();
+        }
+
+        if ($low === $high) {
+            throw new RangeEqualException();
+        }
+
+        if ($percentage < 0) {
+            throw new PercentageLessThanZeroException();
+        }
+
+        if ($percentage > 100) {
+            throw new PercentageGreaterThan100Exception();
+        }
+
+        $value = $low;
+
+        return $value + ($percentage / 100) * ($high - $low);
+    }
 }

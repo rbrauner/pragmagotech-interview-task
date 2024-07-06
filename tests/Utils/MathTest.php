@@ -7,6 +7,8 @@ namespace PragmaGoTech\Interview\Tests\Utils;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use PragmaGoTech\Interview\Exception\LowGreaterThanHighException;
+use PragmaGoTech\Interview\Exception\PercentageGreaterThan100Exception;
+use PragmaGoTech\Interview\Exception\PercentageLessThanZeroException;
 use PragmaGoTech\Interview\Exception\RangeEqualException;
 use PragmaGoTech\Interview\Exception\ValueGreaterThanHighException;
 use PragmaGoTech\Interview\Exception\ValueLessThanLowException;
@@ -18,6 +20,8 @@ use PragmaGoTech\Interview\Utils\Math;
 #[CoversClass(Math::class)]
 final class MathTest extends TestCase
 {
+    // calculatePercentageBetween
+
     public function testCalculatePercentageBetweenPositive(): void
     {
         // Act
@@ -97,5 +101,88 @@ final class MathTest extends TestCase
 
         // Act
         Math::calculatePercentageBetween(100, 100, 100);
+    }
+
+    // calculateValueBetweenWithPercentage
+
+    public function testCalculateValueBetweenWithPercentagePositive(): void
+    {
+        // Act
+        $value = Math::calculateValueBetweenWithPercentage(10, 100, 200);
+
+        // Assert
+        $this->assertEquals(110, $value);
+    }
+
+    public function testCalculateValueBetweenWithPercentageNegative(): void
+    {
+        // Act
+        $value = Math::calculateValueBetweenWithPercentage(10, -200, -100);
+
+        // Assert
+        $this->assertEquals(-190, $value);
+    }
+
+    public function testCalculateValueBetweenWithPercentagePositiveAndNegative(): void
+    {
+        // Act
+        $value = Math::calculateValueBetweenWithPercentage(10, -50, 50);
+
+        // Assert
+        $this->assertEquals(-40, $value);
+    }
+
+    public function testCalculateValueBetweenWithPercentageMin(): void
+    {
+        // Act
+        $value = Math::calculateValueBetweenWithPercentage(0, 100, 200);
+
+        // Assert
+        $this->assertEquals(100, $value);
+    }
+
+    public function testCalculateValueBetweenWithPercentageMax(): void
+    {
+        // Act
+        $value = Math::calculateValueBetweenWithPercentage(100, 100, 200);
+
+        // Assert
+        $this->assertEquals(200, $value);
+    }
+
+    public function testCalculateValueBetweenWithPercentageBelowZero(): void
+    {
+        // Assert
+        $this->expectException(PercentageLessThanZeroException::class);
+
+        // Act
+        Math::calculateValueBetweenWithPercentage(-1, 100, 200);
+    }
+
+    public function testCalculateValueBetweenWithPercentageAbove100(): void
+    {
+        // Assert
+        $this->expectException(PercentageGreaterThan100Exception::class);
+
+        // Act
+        Math::calculateValueBetweenWithPercentage(101, 100, 200);
+    }
+
+    public function testCalculateValueBetweenWithPercentageSwapRange(): void
+    {
+        // Assert
+        $this->expectException(LowGreaterThanHighException::class);
+
+        // Act
+        Math::calculateValueBetweenWithPercentage(10, 200, 100);
+    }
+
+    public function testCalculateValueBetweenWithPercentageRangeEqual(): void
+    {
+        // Assert
+        $this->expectException(RangeEqualException::class);
+
+        // Act
+        Math::calculateValueBetweenWithPercentage(10, 100, 100);
     }
 }
