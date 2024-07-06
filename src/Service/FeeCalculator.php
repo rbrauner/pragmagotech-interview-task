@@ -6,6 +6,8 @@ namespace PragmaGoTech\Interview\Service;
 
 use PragmaGoTech\Interview\Contract\FeeCalculatorInterface;
 use PragmaGoTech\Interview\Contract\LoanProposalInterface;
+use PragmaGoTech\Interview\Exception\AmountGreaterThanMaximumException;
+use PragmaGoTech\Interview\Exception\AmountLessThanMinimumException;
 use PragmaGoTech\Interview\Factory\FeeStructureFactory;
 
 /**
@@ -19,9 +21,17 @@ final readonly class FeeCalculator implements FeeCalculatorInterface
     #[\Override]
     public function calculate(LoanProposalInterface $application): float
     {
-        // $amount = $application->getAmount();
-        // $term = $application->getTerm();
-        // $feeStructure = FeeStructureFactory::create($term);
+        $amount = $application->getAmount();
+        $term = $application->getTerm();
+        $feeStructure = FeeStructureFactory::create($term);
+
+        if ($feeStructure->getMinAmount() > $amount) {
+            throw new AmountLessThanMinimumException();
+        }
+
+        if ($feeStructure->getMaxAmount() < $amount) {
+            throw new AmountGreaterThanMaximumException();
+        }
 
         return 0.0;
     }
